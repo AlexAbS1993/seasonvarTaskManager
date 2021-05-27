@@ -1,0 +1,7 @@
+.wrapper {
+    width: 40%;
+    height: 90%;
+    border-right: 2px #3683DA solid;
+    border-left: 2px #3683DA solid;
+    text-align: center;
+}

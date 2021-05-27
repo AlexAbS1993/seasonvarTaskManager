@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +12,36 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+p, h1, h2, h3, h4, h5, span {
+  font-family: 'Podkova', serif;
+}
+
+
+
+a {
+  text-decoration: none;
+  color: black;
+  border: 2px blue transparent;
+  font-size: calc(3px + 2vmin);
+  font-family: 'Comfortaa', cursive;
+}
+
+@media screen and (max-width: 600px) {
+  a{
+    font-size: calc(6px + 2vmin);
+  }
+}
+
+a:active{
+  color: black;
+}
+
+a:visited{
+  color: black;
+}
+
+a:hover {
+  border: 2px rgb(51, 51, 129) solid;
+  background-color: rgb(189, 206, 230);
 }

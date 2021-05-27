@@ -1,0 +1,53 @@
+.sub_button {
+    background-color: white;
+    border: 1px solid #3683DA;
+    color: #3683DA;
+    transition: .2s all linear;
+}
+.sub_button:hover {
+    color: white;
+    background-color: #3683DA;
+}
+.sub_button:active {
+    transform: translate(-2px, 3px);
+}
+
+.dissable{
+    background-color: gray;
+    color: rgb(207, 187, 187);
+    cursor: auto;
+    animation: colorSwap infinite 1s linear;
+    border: 1px solid #59697a;
+}
+
+@keyframes colorSwap {
+    0%{
+        background-color: grey
+    }
+    60%{
+        background-color: rgb(165, 165, 165)
+    }
+    100%{
+        background-color: grey
+    }
+}
+
+.enable {
+    cursor: pointer;
+}
+
+/* .big {
+
+} */
+
+.medium {
+    padding: 5px 20px 5px 20px;
+    min-width: 40px;
+    max-width: 300px;
+    font-size: calc(2px + 1.2vmax);
+    min-height: 40px;
+}
+/* 
+.little{
+
+} */
