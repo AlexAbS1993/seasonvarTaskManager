@@ -1,10 +1,9 @@
 import classes from "./navigation.module.css";
 import { FC } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { LogOutNavTypes } from "../../Types/navigationTypes/navTypes";
 
-type LogOutNavTypes = {
-    menus: {name: string, link: string}[]
-}
+
 
 export const LogNav:FC<LogOutNavTypes> = ({menus}) => {
     const location = useLocation()

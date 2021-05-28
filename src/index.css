@@ -22,7 +22,7 @@ p, h1, h2, h3, h4, h5, span {
 a {
   text-decoration: none;
   color: black;
-  border: 2px blue transparent;
+  border: 2px transparent solid;
   font-size: calc(3px + 2vmin);
   font-family: 'Comfortaa', cursive;
 }

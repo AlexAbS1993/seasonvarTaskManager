@@ -1,7 +1,7 @@
 import classes from "./login.module.css"
 import { FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState, ThunkAppDispatch } from "../../../redux/store"
+import { RootState, ThunkAppDispatch } from "../../../Types/reduxTypes/reduxStoreTypes"
 import { Form } from "../../../assets/components/Form/Form"
 import { loginisationThunk } from "../../../redux/userReducer"
 
@@ -35,7 +35,7 @@ export const Login:FC = () => {
         {
             datas && <div className={classes.wrapper}>
             <h1>Войдите на сайт</h1>
-            <Form schema={loginSchema} onChange={handleChange} onSubmit={handleSubmit} loading={loading} buttonText="Войти на сайт"/>
+            <Form schema={loginSchema} onChange={handleChange} onSubmit={handleSubmit} loading={loading} buttonText="Войти на сайт" datas={datas}/>
         </div>
         }       
         </>

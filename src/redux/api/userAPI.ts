@@ -1,13 +1,11 @@
 import axios from 'axios'
+import { dataType } from '../../Types/apiTypes/apiUserTypes'
 
 const instance = axios.create({
     baseURL: "http://localhost:5000/auth"
 })
 
-export type dataType = {
-    login: string,
-    password: string
-}
+
 
 export const userAPI = {
     login: (data:dataType) => {

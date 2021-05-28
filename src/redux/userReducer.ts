@@ -1,20 +1,21 @@
-import { AppDispatch } from './store';
-import { dataType, userAPI } from './api/userAPI';
+import { dataType } from '../Types/apiTypes/apiUserTypes';
+import { AppDispatch } from '../Types/reduxTypes/reduxStoreTypes';
+import { ReducerActionsType, UserInitialStateType } from '../Types/reduxTypes/reduxUserReducerTypes';
+import { userAPI } from './api/userAPI';
 
-const initialState = {
+export const userInitialState = {
     login: "",
     status: "",
     not: "",
     error: "",
     initialize: false,
     loading: false,
-    registrationDone: false
+    registrationDone: false,
+    _id: ""
 }
 
-type InitialStateType = typeof initialState
-
-let userReducerActions = {
-    login: (data: {login: string, token?: string, status: string}) => {
+export let userReducerActions = {
+    login: (data: {login: string, token?: string, status: string, _id: string}) => {
         return {type: "USER_LOGIN", data} as const
     },
     setNotification: (message: string) => {
@@ -34,15 +35,15 @@ let userReducerActions = {
     }
 }
 
-type ActionsType<T> = T extends {[key:string]: infer U}  ? U : never
-type ReducerActionsType = ReturnType<ActionsType<typeof userReducerActions>>
 
-export const userReducer = (state: InitialStateType = initialState, action: ReducerActionsType):InitialStateType => {
+
+export const userReducer = (state: UserInitialStateType = userInitialState, action: ReducerActionsType):UserInitialStateType => {
     switch(action.type){
         case "USER_LOGIN": {
             return {
                 ...state,
                 login: action.data.login,
+                _id: action.data._id,
                 status: action.data.status
             }
         }
@@ -113,7 +114,6 @@ export const loginisationThunk = (data: dataType) => async(dispatch: AppDispatch
         dispatch(userReducerActions.setNotification(response.data.message))
     }
     catch(e){
-        console.log({...e})
         if (!e.response){
             dispatch(userReducerActions.setError("Сервер не отвечает"))
         }

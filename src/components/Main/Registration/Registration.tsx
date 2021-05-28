@@ -2,8 +2,8 @@ import { FC, useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect } from "react-router"
 import { Form } from "../../../assets/components/Form/Form"
-import { dataType } from "../../../redux/api/userAPI"
-import { RootState, ThunkAppDispatch } from "../../../redux/store"
+import { dataType } from "../../../Types/apiTypes/apiUserTypes"
+import { RootState, ThunkAppDispatch } from "../../../Types/reduxTypes/reduxStoreTypes"
 import { registrationThunk } from "../../../redux/userReducer"
 import classes from './registration.module.css'
 
@@ -42,7 +42,7 @@ export const Registration:FC = () => {
             {
             datas && <div className={classes.wrapper}>
             <h1>Регистрация на сайте</h1>
-                <Form schema={registrationSchema} onChange={handleChange} onSubmit={handleSubmit} loading={loading} buttonText="Регистрация"/>
+                <Form schema={registrationSchema} onChange={handleChange} onSubmit={handleSubmit} loading={loading} buttonText="Регистрация" datas={datas}/>
              </div>
         }  
         </>

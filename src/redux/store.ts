@@ -1,16 +1,15 @@
+import { taskReducer } from './tasksReducer';
+import { countReducer } from './countReducer';
 import { userReducer } from './userReducer';
 import {applyMiddleware, combineReducers, createStore} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
 const reducers = combineReducers({
-    user: userReducer
+    user: userReducer,
+    count: countReducer,
+    task: taskReducer
 })
 
-export const store = createStore(reducers, applyMiddleware(thunkMiddleware))
-
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
-export type ThunkAppDispatch = (data: any) => (dispatch: AppDispatch) => void
+export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 (window as any).store = store

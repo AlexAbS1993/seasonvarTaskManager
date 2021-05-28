@@ -1,7 +1,7 @@
 import classes from "./navigation.module.css";
 import { FC } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../Types/reduxTypes/reduxStoreTypes";
 import { LogNav } from "./LogOutNav";
 
 const loginFields = [
@@ -21,9 +21,7 @@ export const Navigation:FC = ({children}) => {
                     }    
             </div>
         </nav> 
-        <div>
           {children}
-        </div>
         </>
     )
 }
