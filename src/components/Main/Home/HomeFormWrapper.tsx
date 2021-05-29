@@ -16,7 +16,6 @@ export const HomeFormWrapper:FC = () => {
     const loading = useSelector<RootState, boolean>(state => state.task.loading)
     const notification = useSelector<RootState, string>(state => state.task.notification)
     const [datas, setDatas] = useState<any>()
-    console.log(datas)
     const dispatch: ThunkAppDispatch = useDispatch()
     useEffect(() => {
         let initialDatas:any = {}

@@ -28,6 +28,7 @@
     font-size: 1.2vmax;
     color: #3683dad5;
     transition: .25s all linear;
+    padding: 0px;
 }
 
 .rightSide input:focus{ 

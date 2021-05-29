@@ -1,0 +1,20 @@
+.acceptedReworkingForm {
+    position: absolute;
+    height: 100px;
+    left: -1000%;
+    top: 120%;
+    background-color: cornsilk;
+    border: rgba(220, 20, 60, 0.315) 2px solid;
+    padding: 5px;
+    z-index: 5;
+}
+
+@media screen and (max-width: 600px) {
+    .acceptedReworkingForm{
+        left: -500%;
+    }
+}
+
+.reworkingWrapper {
+    position: relative;
+}

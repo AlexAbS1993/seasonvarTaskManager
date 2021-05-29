@@ -8,10 +8,11 @@ type TextInputType = {
     onChange: (name:string, value: string) => void,
     type: "text" | "textarea" | "password",
     id: string,
-    value: string
+    value: string,
+    inputVariant?: "medium" | "big" | "little"
 }
 
-export const Input:FC<TextInputType> = ({label, name, placeholder, onChange, type, id, value}) => {
+export const Input:FC<TextInputType> = ({label, name, placeholder, onChange, type, id, value, inputVariant}) => {
     return (
         <div className={classes.inputWrapper}>
             <div className={classes.leftSide}><label htmlFor={id}>{label}</label></div>

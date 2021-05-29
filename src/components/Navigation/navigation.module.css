@@ -36,4 +36,22 @@
     display: grid;
     align-items: center;
     justify-content: center;
+    grid-template-rows: 100% 0%;
+    position: relative;
+}
+
+.counter {
+    position: absolute;
+    background-color: #123052;
+    border: 2px solid orange;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    left: 80%;
+    top: -10px
 }

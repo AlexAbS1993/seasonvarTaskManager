@@ -1,0 +1,1 @@
+export type statuses = "new" | "working" | "reworking" | "check" | "ready"

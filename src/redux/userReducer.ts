@@ -5,7 +5,7 @@ import { userAPI } from './api/userAPI';
 
 export const userInitialState = {
     login: "",
-    status: "",
+    status: "" as "admin" | "user",
     not: "",
     error: "",
     initialize: false,
@@ -15,7 +15,7 @@ export const userInitialState = {
 }
 
 export let userReducerActions = {
-    login: (data: {login: string, token?: string, status: string, _id: string}) => {
+    login: (data: {login: string, token?: string, status: "admin" | "user", _id: string}) => {
         return {type: "USER_LOGIN", data} as const
     },
     setNotification: (message: string) => {

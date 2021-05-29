@@ -22,11 +22,11 @@ function App() {
   const transition = useTransition(location, {
     from: {opacity: 0, display: "none"},
     enter: (item) => async(next, cancel) => {
-      await next({opacity: 0, delay: 300, display: "block"})
-      await next({opacity: 1, config:{duration: 300}})
+      await next({opacity: 0, delay: 200, display: "block"})
+      await next({opacity: 1, config:{duration: 200}})
     },
     leave: (item) => async(next, cancel) => {
-      await next({opacity: 0, config:{duration: 200}})
+      await next({opacity: 0, config:{duration: 10}})
       await next({display: "none"})
     },
   })
@@ -50,6 +50,9 @@ function App() {
                 <Switch location={item}>
                     <Route path="/home" component={Home}/>
                     <Route path="/new" component={NewTasksWrapper} />
+                    <Route path="/working" component={NewTasksWrapper} />
+                    <Route path="/reworking" component={NewTasksWrapper} />
+                    <Route path="/check" component={NewTasksWrapper} />
                     <Route path="/*" render={() => {return <Redirect to="/home"/>}}/>
                     <Route path="/" render={() => {return <Redirect to="/home"/>}}/>
                 </Switch>

@@ -1,3 +1,4 @@
+import { statuses } from './../../Types/apiTypes/apiCountType';
 import axios from 'axios'
 
 const instance = axios.create({
@@ -12,7 +13,11 @@ export const countAPI = {
             }
         })
     },
-    getCountOfComments: (_id: string) => {
-        return instance.get(`/comments/${_id}`)
+    getCountOfComments: (status: statuses) => {
+        return instance.get(`/comments/${status}`, {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        })
     }
 }

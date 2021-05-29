@@ -21,4 +21,14 @@ export type newTaskType = {
     link: string
 }
 
-export type MappedTaskType = newTaskType&{userStatus: string, loading: boolean, userID: string}
+export type MappedTaskType = newTaskType&{userStatus: "admin" | "user", userID: string, newCommentaryCount: number}
+export type NewCommentDataType = {
+    _id: string,
+    commentary: string
+}
+
+export type ShowUpButtonType = {
+    newCommentaryCount: number,
+    isOpen: boolean,
+    onShowUpClick: () => void
+}

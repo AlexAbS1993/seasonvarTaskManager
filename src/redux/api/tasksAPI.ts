@@ -36,8 +36,12 @@ export const taskAPI = {
             }
         })
     },
-    changeStatus: (status: tasksThunkDataTypes, _id: string) => {
-        return instance.post("/change", {_id, status}, {
+    changeStatus: (status: tasksThunkDataTypes, _id: string, commentary?: string) => {
+        let data:any = {_id, status}
+        if (commentary){
+            data.commentary = commentary
+        }
+        return instance.post("/change", data, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }

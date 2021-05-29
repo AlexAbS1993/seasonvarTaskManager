@@ -1,0 +1,34 @@
+.addedDiscriptionInfo{
+    grid-column: 1/3;
+}
+.addedLinkInfo{
+    grid-column: 3/6;
+}
+
+.commentField{
+    grid-column: 1/6;
+}
+
+.commentaryList{
+    grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.oneComment {
+    margin-top: 5px;
+    height: 30px;
+    padding: 4px;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.newComment {
+    background-color: rgb(25, 13, 189);
+    color: white;
+}
+.oldComment{
+    background-color: darkcyan;
+}

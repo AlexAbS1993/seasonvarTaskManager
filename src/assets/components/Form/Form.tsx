@@ -11,15 +11,17 @@ type FormType = {
         onSubmit: (e:any) => void,
         loading: boolean,
         buttonText: string,   
-        datas: any    
+        datas: any,
+        buttonVariant?: "medium" | "big" | "little",
+        inputVariant?: "medium" | "big" | "little",
 }
 
-export const Form:FC<FormType> = ({schema, onChange, onSubmit, loading, buttonText, datas}) => {
+export const Form:FC<FormType> = ({schema, onChange, onSubmit, loading, buttonText, datas, buttonVariant, inputVariant}) => {
     return (
         <form onSubmit={onSubmit}>
             {schema.map((e) => {
                 if (e.type === "text" || e.type === "textarea" || e.type === "password"){
-                    return <Input type={e.type} name={e.name} onChange={onChange} placeholder={e.placeholder} label={e.label} key={e.name} id={e.id} value={datas[e.name]}/>
+                    return <Input type={e.type} name={e.name} onChange={onChange} placeholder={e.placeholder} label={e.label} key={e.name} id={e.id} value={datas[e.name]} />
                 }
                 if (e.type === "select"){
                     return <InputSelect type={e.type} name={e.name} onChange={onChange} placeholder={e.placeholder} label={e.label} key={e.name} id={e.id} 
@@ -28,7 +30,7 @@ export const Form:FC<FormType> = ({schema, onChange, onSubmit, loading, buttonTe
                     />
                 }
             } )}
-            <Button type="submit" text={buttonText} variant="medium" disabled={loading}/>
+            <Button type="submit" text={buttonText} variant={buttonVariant ? buttonVariant : "medium"} disabled={loading}/>
         </form>
     )
 }

@@ -1,5 +1,6 @@
+import { statuses } from './../Types/apiTypes/apiCountType';
+import { AppDispatch } from './../Types/reduxTypes/reduxStoreTypes';
 import { countAPI } from './api/countAPI';
-import { AppDispatch } from '../Types/reduxTypes/reduxStoreTypes';
 import { ActionCreatorsType, countInitialStateType, setCountsDataType } from '../Types/reduxTypes/reduxCountReducerTypes';
 
 export const countInitialState = {
@@ -10,7 +11,8 @@ export const countInitialState = {
     reworking: 0,
     check: 0,
     error: "",
-    not: ""
+    not: "",
+    commentaryCounts: {}
 }
 
 export const countActions = {
@@ -28,6 +30,9 @@ export const countActions = {
     },
     setNotification: (not: string) => {
         return {type: "COUNT_SET_NOT", not} as const
+    },
+    setCommentaryCounts: (data: {[key: string] : number}) => {
+        return {type:"COUNT_COMMENT_COUNT", data} as const
     }
 }
 
@@ -61,6 +66,14 @@ export const countReducer = (state: countInitialStateType = countInitialState, a
             return {
                 ...state, 
                 not: action.not
+            }
+        }
+        case "COUNT_COMMENT_COUNT": {
+            return {
+                ...state,
+                commentaryCounts: {
+                    ...action.data
+                }
             }
         }
         default: return state
@@ -102,5 +115,26 @@ export const getTasksCountThunk = () => async(dispatch:AppDispatch) => {
         errorAndNotificationShowDown("not", dispatch)
         dispatch(countActions.setLoading(false))
         dispatch(countActions.setInitialize(true))
+    }
+}
+
+export const getCommentaryCountsThunk = (status: statuses) => async(dispatch:AppDispatch) => {
+    try{
+        dispatch(countActions.setLoading(true))
+        const response = await countAPI.getCountOfComments(status)
+        dispatch(countActions.setCommentaryCounts(response.data.count))
+    }
+    catch(e){
+        if (!e.response){
+            dispatch(countActions.setError("Сервер не отвечает"))
+        }
+        else{
+            dispatch(countActions.setError(e.response.data.message))
+        }
+    }
+    finally{
+        errorAndNotificationShowDown("error", dispatch)
+        errorAndNotificationShowDown("not", dispatch)
+        dispatch(countActions.setLoading(false))
     }
 }
