@@ -1,9 +1,7 @@
 import React from "react";
 import { FC, useState } from "react";
-import { useDispatch} from "react-redux";
-import { schemaType } from "../../../../assets/components/Form/Form";
-import { checkCommentariesThunk } from "../../../../redux/tasksReducer";
-import { ThunkAppDispatch } from "../../../../Types/reduxTypes/reduxStoreTypes";
+import {  useSelector} from "react-redux";
+import { RootState } from "../../../../Types/reduxTypes/reduxStoreTypes";
 import { MappedTaskType} from "../../../../Types/TasksTypes/newTaskTypes";
 import classes from '../newTask.module.css'
 import { HidePart } from "./HidenPart/HidePart";
@@ -18,35 +16,24 @@ let formatter = new Intl.DateTimeFormat("ru", {
     minute: "numeric"
   });
 
-export const MappedTaskInner:FC<MappedTaskType> = ({name, status, priority, statusDetails, discription, userStatus, _id, link, isCheckedBy, userID, newCommentaryCount, commentary}) => {
+export const MappedTaskInner:FC<MappedTaskType> = ({name, status, priority, statusDetails, discription, _id, link, isCheckedBy}) => {
+    const userStatus = useSelector<RootState, "admin" | "user">(state => state.user.status)
+    const newCommentaryCount = useSelector<RootState, number>(state => state.count.commentaryCounts[_id])
     const [isOpen, setIsOpen] = useState(false)
-    const dispatch:ThunkAppDispatch = useDispatch()
     const onShowUpClick = () => {
         setIsOpen(prev => !prev)
-        if (newCommentaryCount > 0){
-           setTimeout(() => {
-            dispatch(checkCommentariesThunk(newCommentaryCount, commentary, status))
-           }, 1000)  
-        }
-    }
-    const isUnSeen = () => {
-        if(!isCheckedBy.some(e => e._id === userID)){
-            return true
-        }
-        return false
-    }
+    } 
     return (      
-    <div className={`${classes.task} ${isUnSeen() ? `${classes.unseen}` : `${classes.seen}`}`}> 
+    <div className={`${classes.task} ${isCheckedBy ? `${classes.unseen}` : `${classes.seen}`}`}> 
                     <div>{name} </div>
                     <div> {priority} </div>
-                    <div> {formatter.format(new Date(statusDetails.addedAt))}</div>
+                    <div> {formatter.format(new Date(statusDetails))}</div>
                     <div className={classes.movements}> 
                         <Movements status={status} userStatus={userStatus} _id={_id}/>
                     </div>
-                    <ShowUpButton isOpen={isOpen} onShowUpClick={onShowUpClick} newCommentaryCount={newCommentaryCount}/>
+                    <ShowUpButton isOpen={isOpen} onShowUpClick={onShowUpClick} newCommentaryCount={newCommentaryCount}/> 
                     {
                         isOpen ? <><HidePart 
-                        commentary={commentary} 
                         discription={discription} 
                         link={link}
                         newCommentaryCount={newCommentaryCount} 

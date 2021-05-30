@@ -4,6 +4,5 @@ export type hidePartTypes = {
     _id: string,
     link: string
     status: statuses,
-    commentary: any[],
     newCommentaryCount: number
 }

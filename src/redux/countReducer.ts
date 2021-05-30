@@ -12,7 +12,7 @@ export const countInitialState = {
     check: 0,
     error: "",
     not: "",
-    commentaryCounts: {}
+    commentaryCounts: {} as {[key:string]:number}
 }
 
 export const countActions = {

@@ -15,7 +15,10 @@ export const taskInitialState = {
     initialize: false,
     error: "",
     notification: "",
-    loading: false
+    loading: false,
+    commentaries: {
+
+    } as any
 }
 
 export const taskActions = {
@@ -36,6 +39,9 @@ export const taskActions = {
     },
     cleanTasks: () => {
         return {type: "TASK_CLEAN_TASK"} as const
+    },
+    setCommentaries: (data: {[key:string]:any}) => {
+        return {type: "TASK_SET_COM", data} as const
     }
 }
 
@@ -74,6 +80,15 @@ export const taskReducer = (state:TaskInitialStateType = taskInitialState, actio
         case "TASK_CLEAN_TASK":{
             return {
                 ...taskInitialState
+            }
+        }
+        case "TASK_SET_COM": {
+            return {
+                ...state,
+                commentaries: {
+                    ...state.commentaries,
+                    ...action.data
+                }
             }
         }
         default: return state
@@ -208,7 +223,7 @@ export const checkCommentariesThunk = (countOfNew: number, commentary: any[], st
         let response = async() => {
             for (let i = 0; i < countOfNew; i++){
                 setTimeout(async () => {
-                    await commentaryAPI.checkCommentary(commentary[i]._id)
+                    await commentaryAPI.checkCommentary(commentary[i])
                     if (i === countOfNew - 1){
                         dispatch(getCommentaryCountsThunk(status))
                         // dispatch(getTasksThunk(status, false))
@@ -232,11 +247,34 @@ export const checkCommentariesThunk = (countOfNew: number, commentary: any[], st
     }
 }
 
+
+export const getCommentsThunk = (_id: string) => async(dispatch: AppDispatch) => {
+    try{
+        const response = await commentaryAPI.getCommentary(_id)
+        let data:any = {}
+        data[_id] = response.data.comments
+        dispatch(taskActions.setCommentaries(data))
+    }
+    catch(e){
+        if (!e.response){
+            dispatch(taskActions.setError("Сервер не отвечает"))
+        }
+        else{
+            dispatch(taskActions.setError(e.response.data.message))
+        }
+    }
+    finally{
+        // dispatch(taskActions.setLoading(false))
+        errorAndNotificationShowDown("error", dispatch)
+        errorAndNotificationShowDown('not', dispatch)
+    }
+}
+
 export const createCommentThunk = (data: NewCommentDataType, status: statuses) => async(dispatch: AppDispatch | ThunkAppDispatch) => {
     try{
         // dispatch(taskActions.setLoading(true))
         const response = await commentaryAPI.createCommentarty(data._id, data.commentary)
-        dispatch(getTasksThunk(status, false))
+        dispatch(getCommentsThunk(data._id))
     }
     catch(e){
         if (!e.response){

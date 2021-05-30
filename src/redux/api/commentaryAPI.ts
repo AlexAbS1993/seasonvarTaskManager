@@ -18,5 +18,12 @@ export const commentaryAPI = {
                 Authorization: localStorage.getItem("token")
             }
         })
+    },
+    getCommentary: (_id: string) => {
+        return instance.get(`/getComment/${_id}`, {
+            headers:{
+                Authorization: localStorage.getItem("token")
+            }
+        })
     }
 }

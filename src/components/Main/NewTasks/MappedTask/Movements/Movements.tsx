@@ -7,7 +7,6 @@ import { MovementsType } from "../../../../../Types/TasksTypes/movementsTypes"
 import { SpeacialReworkingMovement } from "./SpecialReworkingMovement"
 
 const MovementsInner:FC<MovementsType> = ({status, userStatus, _id}) => {
-    console.log("here")
     const dispatch:ThunkAppDispatch = useDispatch()
     const loading = useSelector<RootState, boolean>(state => state.task.loading)
     const deleteClickHandler = () => {

@@ -21,7 +21,7 @@ export type newTaskType = {
     link: string
 }
 
-export type MappedTaskType = newTaskType&{userStatus: "admin" | "user", userID: string, newCommentaryCount: number}
+export type MappedTaskType = Omit<newTaskType, "statusDetails"|"isCheckedBy"|"commentary">&{statusDetails: Date, isCheckedBy: boolean}
 export type NewCommentDataType = {
     _id: string,
     commentary: string

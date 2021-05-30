@@ -1,4 +1,3 @@
-import classes from "./newTask.module.css";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, ThunkAppDispatch } from "../../../Types/reduxTypes/reduxStoreTypes";
@@ -10,10 +9,8 @@ import { statuses } from "../../../Types/apiTypes/apiCountType";
 
 
 export const TasksInner:FC<{status:statuses}> = ({status}) => {
-    const tasks = useSelector<RootState, newTaskType[]>(state => state.task[status])
-    const userStatus = useSelector<RootState, "admin" | "user">(state => state.user.status)
+    const tasks = useSelector<RootState, newTaskType[]>(state => state.task[status]) 
     const userID = useSelector<RootState, string>(state => state.user._id)
-    const countOfCommentary = useSelector<RootState, {[key: string]: number}>(state => state.count.commentaryCounts)
     const dispatch:ThunkAppDispatch = useDispatch()
     useEffect(() => {
         let listOfId = []
@@ -27,8 +24,24 @@ export const TasksInner:FC<{status:statuses}> = ({status}) => {
     return (
         <>
             {
-                tasks.map((e) => {
-                    return <MappedTask {...e} userStatus={userStatus} userID={userID} key={e._id} newCommentaryCount={countOfCommentary[e._id]}/>
+                tasks.map((e, i) => {
+                    const isUnSeen = () => {
+                        if(!e.isCheckedBy.some(el => el._id === userID)){
+                            return true
+                        }
+                        return false
+                    }
+                    const isCheckedBy = isUnSeen()
+                    return <MappedTask 
+                    statusDetails={e.statusDetails.addedAt} 
+                    name={e.name}
+                    _id={e._id}
+                    discription={e.discription}
+                    link={e.link}
+                    status={e.status}
+                    priority={e.priority}
+                    isCheckedBy={isCheckedBy}
+                    key={`${e._id}${e.name}`}/>
                 })
             }
         </>
