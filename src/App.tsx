@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import './App.css';
 import { Header } from './components/Fake/Fake';
 import { Login } from './components/Main/Login/Login';
 import { Registration } from './components/Main/Registration/Registration';
@@ -13,6 +12,7 @@ import { logInThunk } from './redux/userReducer';
 import {useTransition} from 'react-spring'
 import { Home } from './components/Main/Home/Home';
 import { NewTasksWrapper } from './components/Main/NewTasks/TasksWrapper';
+import { socket, subscribe } from './redux/web-socket/io';
 
 
 function App() {
@@ -34,6 +34,9 @@ function App() {
   useEffect(() => {
     dispatch(logInThunk())
   }, [dispatch])
+  useEffect(() => {
+    subscribe(dispatch, location.pathname)
+  }, [location.pathname])
   return (
     <>
     {

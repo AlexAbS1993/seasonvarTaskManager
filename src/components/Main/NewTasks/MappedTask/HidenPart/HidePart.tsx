@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, schemaType } from "../../../../../assets/components/Form/Form";
-import { checkCommentariesThunk, createCommentThunk, getCommentsThunk } from "../../../../../redux/tasksReducer";
+import { checkCommentariesThunk, cleanComments, createCommentThunk, getCommentsThunk } from "../../../../../redux/tasksReducer";
 import { RootState, ThunkAppDispatch } from "../../../../../Types/reduxTypes/reduxStoreTypes";
 import { hidePartTypes } from "../../../../../Types/TasksTypes/hidePartTypes";
 import classes from './hidepart.module.css'
@@ -18,6 +18,11 @@ export const HidePart:FC<hidePartTypes> = ({discription, link, _id, status, newC
         if(!commentary){
             dispatch(getCommentsThunk(_id))
         }
+        return () => {
+            dispatch(cleanComments(_id))
+        }
+    }, [])
+    useEffect(() => {
         if (newCommentaryCount > 0 && commentary){
             const commentaryIDarray:any[] = []
             for (let i = 0; i < commentary.length; i++){

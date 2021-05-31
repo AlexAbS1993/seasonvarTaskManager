@@ -42,6 +42,9 @@ export const taskActions = {
     },
     setCommentaries: (data: {[key:string]:any}) => {
         return {type: "TASK_SET_COM", data} as const
+    },
+    setCommentaryClear: (_id: string) => {
+        return {type: "TASK_SET_CLEAR_COM", _id} as const
     }
 }
 
@@ -88,6 +91,15 @@ export const taskReducer = (state:TaskInitialStateType = taskInitialState, actio
                 commentaries: {
                     ...state.commentaries,
                     ...action.data
+                }
+            }
+        }
+        case "TASK_SET_CLEAR_COM": {
+            return {
+                ...state,
+                commentaries: {
+                    ...state.commentaries,
+                    [action._id]: undefined
                 }
             }
         }
@@ -289,4 +301,8 @@ export const createCommentThunk = (data: NewCommentDataType, status: statuses) =
         errorAndNotificationShowDown("error", dispatch)
         errorAndNotificationShowDown('not', dispatch)
     }
+}
+
+export const cleanComments = (_id: string) => async(dispatch: AppDispatch) => {
+    dispatch(taskActions.setCommentaryClear(_id))
 }

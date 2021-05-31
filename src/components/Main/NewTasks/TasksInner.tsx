@@ -5,6 +5,7 @@ import { newTaskType } from "../../../Types/TasksTypes/newTaskTypes";
 import { MappedTask } from "./MappedTask/MappedTask";
 import { checkTasksThunk } from "../../../redux/tasksReducer";
 import { statuses } from "../../../Types/apiTypes/apiCountType";
+import { getTasksCountThunk } from "../../../redux/countReducer";
 
 
 
@@ -20,6 +21,9 @@ export const TasksInner:FC<{status:statuses}> = ({status}) => {
             }
         }
         dispatch(checkTasksThunk(listOfId))
+        setTimeout(() => {
+            dispatch(getTasksCountThunk())
+        }, 2500)
     }, [dispatch])
     return (
         <>
