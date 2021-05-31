@@ -11,7 +11,7 @@ import { RootState, ThunkAppDispatch } from './Types/reduxTypes/reduxStoreTypes'
 import { logInThunk } from './redux/userReducer';
 import {useTransition} from 'react-spring'
 import { Home } from './components/Main/Home/Home';
-import { NewTasksWrapper } from './components/Main/NewTasks/TasksWrapper';
+import { TasksWrapper } from './components/Main/NewTasks/TasksWrapper';
 import { socket, subscribe } from './redux/web-socket/io';
 
 
@@ -52,10 +52,10 @@ function App() {
               <MainWrapper springprops={props} type="inner"> 
                 <Switch location={item}>
                     <Route path="/home" component={Home}/>
-                    <Route path="/new" component={NewTasksWrapper} />
-                    <Route path="/working" component={NewTasksWrapper} />
-                    <Route path="/reworking" component={NewTasksWrapper} />
-                    <Route path="/check" component={NewTasksWrapper} />
+                    <Route path="/new" component={TasksWrapper} />
+                    <Route path="/working" component={TasksWrapper} />
+                    <Route path="/reworking" component={TasksWrapper} />
+                    <Route path="/check" component={TasksWrapper} />
                     <Route path="/*" render={() => {return <Redirect to="/home"/>}}/>
                     <Route path="/" render={() => {return <Redirect to="/home"/>}}/>
                 </Switch>

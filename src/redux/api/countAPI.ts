@@ -19,5 +19,12 @@ export const countAPI = {
                 Authorization: localStorage.getItem('token')
             }
         })
+    },
+    getAllTasksCount: () => {
+        return instance.get('/getAllTaskCount', {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        })
     }
 }

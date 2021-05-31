@@ -1,5 +1,5 @@
 import { statuses } from './../Types/apiTypes/apiCountType';
-import { AppDispatch } from './../Types/reduxTypes/reduxStoreTypes';
+import { AppDispatch, ThunkAppDispatch } from './../Types/reduxTypes/reduxStoreTypes';
 import { countAPI } from './api/countAPI';
 import { ActionCreatorsType, countInitialStateType, setCountsDataType } from '../Types/reduxTypes/reduxCountReducerTypes';
 
@@ -13,7 +13,11 @@ export const countInitialState = {
     error: "",
     not: "",
     ready: 0,
-    commentaryCounts: {} as {[key:string]:number}
+    commentaryCounts: {} as {[key:string]:number},
+    shouldCheckTaskDidUpdate: false,
+    allCounts: {
+        
+    }
 }
 
 export const countActions = {
@@ -34,6 +38,12 @@ export const countActions = {
     },
     setCommentaryCounts: (data: {[key: string] : number}) => {
         return {type:"COUNT_COMMENT_COUNT", data} as const
+    },
+    setTaskDidUpdate: (value: boolean) => {
+        return {type: "COUNT_TASK_COUNT_UPDATE", value} as const
+    },
+    getAllTasksCount: (data: any) => {
+        return {type: "COUNT_ALL_TASKS_COUNT", data} as const
     }
 }
 
@@ -75,6 +85,18 @@ export const countReducer = (state: countInitialStateType = countInitialState, a
                 commentaryCounts: {
                     ...action.data
                 }
+            }
+        }
+        case "COUNT_TASK_COUNT_UPDATE": {
+            return {
+                ...state, 
+                shouldCheckTaskDidUpdate: action.value
+            }
+        }
+        case "COUNT_ALL_TASKS_COUNT": {
+            return {
+                ...state,
+                allCounts: action.data
             }
         }
         default: return state
@@ -137,5 +159,28 @@ export const getCommentaryCountsThunk = (status: statuses) => async(dispatch:App
         errorAndNotificationShowDown("error", dispatch)
         errorAndNotificationShowDown("not", dispatch)
         dispatch(countActions.setLoading(false))
+    }
+}
+
+export const shouldCheckTaskDidUpdateThunk = (value: boolean) => async(dispatch:AppDispatch) => {
+    dispatch(countActions.setTaskDidUpdate(value))
+}
+
+export const getAllTasks = () => async(dispatch:AppDispatch) => {
+    try{
+        let resonse = await countAPI.getAllTasksCount()
+        dispatch(countActions.getAllTasksCount(resonse.data))
+    }
+    catch(e){
+        if (!e.response){
+            dispatch(countActions.setError("Сервер не отвечает"))
+        }
+        else{
+            dispatch(countActions.setError(e.response.data.message))
+        }
+    }
+    finally{
+        errorAndNotificationShowDown("error", dispatch)
+        errorAndNotificationShowDown("not", dispatch)
     }
 }

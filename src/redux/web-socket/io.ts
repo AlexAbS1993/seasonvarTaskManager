@@ -1,6 +1,6 @@
 import { getTasksThunk } from './../tasksReducer';
 import { statuses } from './../../Types/apiTypes/apiCountType';
-import { getTasksCountThunk } from './../countReducer';
+import { getTasksCountThunk, shouldCheckTaskDidUpdateThunk } from './../countReducer';
 import { ThunkAppDispatch } from './../../Types/reduxTypes/reduxStoreTypes';
 import openSocket from 'socket.io-client'
 

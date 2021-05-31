@@ -5,26 +5,36 @@ import { newTaskType } from "../../../Types/TasksTypes/newTaskTypes";
 import { MappedTask } from "./MappedTask/MappedTask";
 import { checkTasksThunk } from "../../../redux/tasksReducer";
 import { statuses } from "../../../Types/apiTypes/apiCountType";
-import { getTasksCountThunk } from "../../../redux/countReducer";
+import { getTasksCountThunk, shouldCheckTaskDidUpdateThunk } from "../../../redux/countReducer";
 
 
 
 export const TasksInner:FC<{status:statuses}> = ({status}) => {
     const tasks = useSelector<RootState, newTaskType[]>(state => state.task[status]) 
     const userID = useSelector<RootState, string>(state => state.user._id)
+    const howManyNewTask = useSelector<RootState, number>(state => state.count[status])
+    const shouldCheckUpdate = useSelector<RootState, boolean>(state => state.count.shouldCheckTaskDidUpdate)
     const dispatch:ThunkAppDispatch = useDispatch()
     useEffect(() => {
-        let listOfId = []
+        if (howManyNewTask > 0){
+            dispatch(shouldCheckTaskDidUpdateThunk(true))
+        }
+    }, [howManyNewTask])
+    useEffect(() => {
+        if (shouldCheckUpdate === true){
+            let listOfId = []
         for (let i = 0; i < tasks.length; i++){
             if (!tasks[i].isCheckedBy.some(e => e._id === userID)){
                 listOfId.push(tasks[i]._id)
             }
         }
         dispatch(checkTasksThunk(listOfId))
+        dispatch(shouldCheckTaskDidUpdateThunk(false))
         setTimeout(() => {
             dispatch(getTasksCountThunk())
         }, 2500)
-    }, [dispatch])
+        }    
+    }, [shouldCheckUpdate])
     return (
         <>
             {

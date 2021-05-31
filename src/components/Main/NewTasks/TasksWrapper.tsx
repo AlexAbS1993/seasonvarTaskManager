@@ -8,7 +8,7 @@ import { getCommentaryCountsThunk } from "../../../redux/countReducer"
 import { useLocation } from "react-router"
 import { statuses } from "../../../Types/apiTypes/apiCountType"
 
-export const NewTasksWrapper:FC = () => {
+export const TasksWrapper:FC = () => {
     const location = useLocation()
     let amOn:statuses = location.pathname.slice(1) as statuses
     const dispatch:ThunkAppDispatch = useDispatch() 

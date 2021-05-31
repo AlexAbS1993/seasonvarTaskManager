@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { Form, schemaTypeSelect, schemaType } from "../../../assets/components/Form/Form"
 import { RootState, ThunkAppDispatch } from "../../../Types/reduxTypes/reduxStoreTypes"
 import { createTaskThunk } from "../../../redux/tasksReducer"
-import { notificateServer, socket } from "../../../redux/web-socket/io"
+import { notificateServer} from "../../../redux/web-socket/io"
+import classes from "./home.module.css";
 
 const newTaskSchema: (schemaTypeSelect|schemaType)[] = [
     {name: "name", id: "taskname", placeholder:"Введите название", label:"Название задачи", type: "text"},
@@ -56,10 +57,10 @@ export const HomeFormWrapper:FC = () => {
         notificateServer("new", "new")
     }
     return (
-        <>
+        <div className={classes.formWrapper}>
         {
             datas && <Form schema={newTaskSchema} onChange={onChange} buttonText="Создать задачу" loading={loading} onSubmit={onSubmit} datas={datas}/>
         }  
-        </>
+        </div>
     )
 }

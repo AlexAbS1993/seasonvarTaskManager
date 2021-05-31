@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Form, schemaType } from "../../../../../assets/components/Form/Form";
+import { getCommentaryCountsThunk } from "../../../../../redux/countReducer";
 import { checkCommentariesThunk, cleanComments, createCommentThunk, getCommentsThunk } from "../../../../../redux/tasksReducer";
+import { statuses } from "../../../../../Types/apiTypes/apiCountType";
 import { RootState, ThunkAppDispatch } from "../../../../../Types/reduxTypes/reduxStoreTypes";
 import { hidePartTypes } from "../../../../../Types/TasksTypes/hidePartTypes";
 import classes from './hidepart.module.css'
@@ -12,6 +15,8 @@ const commentSchema:schemaType[] = [
 
 export const HidePart:FC<hidePartTypes> = ({discription, link, _id, status, newCommentaryCount}) => {
     const loading = useSelector<RootState, boolean>(state => state.task.loading)
+    const location = useLocation()
+    let amOn:statuses = location.pathname.slice(1) as statuses
     const commentary = useSelector<RootState, any[]>(state => state.task.commentaries[_id]?.commentary)
     const dispatch:ThunkAppDispatch = useDispatch()
     useEffect(() => {
@@ -32,6 +37,9 @@ export const HidePart:FC<hidePartTypes> = ({discription, link, _id, status, newC
             dispatch(checkCommentariesThunk(newCommentaryCount, commentaryIDarray, status))
            }, 1000)  
         }
+    }, [newCommentaryCount, commentary])
+    useEffect(() => {
+        dispatch(getCommentaryCountsThunk(amOn))
     }, [commentary])
     const [datas, setDatas] = useState({
         commentary: ""
